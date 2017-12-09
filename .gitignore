@@ -9,3 +9,6 @@ build/
 hs_err_pid*
 old/
 
+/.idea/
+/out/
+*.iml
