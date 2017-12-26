@@ -127,6 +127,7 @@ repositories
 
     // ClearVolume: 
     maven { url  "http://dl.bintray.com/clearvolume/ClearVolume"  }
+    maven { url "http://dl.bintray.com/haesleinhuepf/snapshots" }
     
     //Sqeazy:
     maven {url  "http://dl.bintray.com/psteinb/maven" }
