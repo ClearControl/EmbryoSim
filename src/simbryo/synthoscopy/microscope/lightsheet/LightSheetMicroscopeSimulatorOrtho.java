@@ -128,6 +128,27 @@ public class LightSheetMicroscopeSimulatorOrtho extends
       addLightSheet(lIlluminationAxisVector3,
                     lIlluminationNormalVector23);
 
+    } else {
+
+      for (int i = 0; i < pNumberOfIlluminationArms; i ++) {
+        double gammazero = toRadians(i * 360 / pNumberOfIlluminationArms);
+        System.out.println("gammazero: " + gammazero);
+
+        float ax = (float) cos(gammazero);
+        float ay = (float) sin(gammazero);
+
+        //Vector3f lIlluminationAxisVector0 = new Vector3f(ax, ay, 0);
+        //Vector3f lIlluminationNormalVector01 = new Vector3f(0, 0, ax * ay);
+        //lIlluminationNormalVector01.normalize();
+
+
+        Vector3f lIlluminationAxisVector0 = new Vector3f(ax, ay, 0);
+        Vector3f lIlluminationNormalVector01 = new Vector3f(0, 0, 1);
+
+
+        addLightSheet(lIlluminationAxisVector0,
+                      lIlluminationNormalVector01);
+      }
     }
 
     int lMaxCameraImageWidth = pMaxCameraResolution;

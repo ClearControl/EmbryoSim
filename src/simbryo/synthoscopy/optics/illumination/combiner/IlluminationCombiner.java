@@ -87,7 +87,10 @@ public class IlluminationCombiner<I extends IlluminationOpticsInterface<ClearCLI
 
     int lNumberOfLightMapsToCombine = getNumberOfLightMapsToCombine();
 
-    if (lNumberOfLightMapsToCombine == 2)
+    if (lNumberOfLightMapsToCombine == 1)
+    {
+
+    } else if (lNumberOfLightMapsToCombine == 2)
     {
       mRenderKernel = lProgram.createKernel("combine2");
       mRenderKernel.setArgument("image0",
@@ -112,11 +115,19 @@ public class IlluminationCombiner<I extends IlluminationOpticsInterface<ClearCLI
       mRenderKernel.setArgument("image3",
                                 mListOfIlluminationOptics.get(3)
                                                          .getImage());
+    } else {
+      mRenderKernel = lProgram.createKernel("combine" + lNumberOfLightMapsToCombine);
+      for (int i = 0; i < lNumberOfLightMapsToCombine; i++)
+      {
+        mRenderKernel.setArgument("image" + i,
+                                  mListOfIlluminationOptics.get(i).getImage());
+      }
+
     }
 
-    if (lNumberOfLightMapsToCombine > 1)
+    if (lNumberOfLightMapsToCombine > 1 && mRenderKernel != null) {
       mRenderKernel.setArgument("imagedest", getImage());
-
+    }
   }
 
   @Override
@@ -130,7 +141,7 @@ public class IlluminationCombiner<I extends IlluminationOpticsInterface<ClearCLI
   @Override
   public void render(boolean pWaitToFinish)
   {
-    if (getNumberOfLightMapsToCombine() == 1)
+    if (getNumberOfLightMapsToCombine() == 1 || mRenderKernel == null)
       return;
 
     mRenderKernel.setGlobalOffsets(0, 0, 0);
