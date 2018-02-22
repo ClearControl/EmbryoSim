@@ -177,7 +177,15 @@ public class LightSheetMicroscopeSimulatorDemo
         lSimulator.openViewerForControls();
 
         ClearCLImageViewer lCameraImageViewer =
+            lCameraImageViewer =
                                               lSimulator.openViewerForCameraImage(0);
+        //ClearCLImage lImage = lSimulator.getCameraImage(0);
+
+        //System.out.println("Sum intensity was: " + sumImage(lImage));
+        lSimulator.render(true);
+        //System.out.println("After rendering, sum intensity is: "
+        //                   + sumImage(lImage));
+
         for (int i = 1; i < pNumberOfDetectionArms; i++)
           lCameraImageViewer = lSimulator.openViewerForCameraImage(i);
 
@@ -217,5 +225,32 @@ public class LightSheetMicroscopeSimulatorDemo
       e.printStackTrace();
     }
   }
+/*
+  private long sumImage(ClearCLImage lImage)
+  {
+    long
+        size =
+        lImage.getSizeInBytes();// * lImage.getWidth() * lImage.getHeight();
 
+    OffHeapMemory
+        lTransferMemory =
+        OffHeapMemory.allocateBytes("temp image", size);
+
+    lImage.writeTo(lTransferMemory,
+                   new long[] { 0L, 0L, 0L },
+                   new long[] { (long) lImage.getWidth(),
+                                (long) lImage.getHeight(),
+                                (long) lImage.getDepth() },
+                   true);
+
+    ContiguousBuffer lBuffer = new ContiguousBuffer(lTransferMemory);
+
+    long sum = 0;
+    while (lBuffer.hasRemainingShort())
+    {
+      sum += lBuffer.readShort();
+    }
+    return sum;
+  }
+*/
 }

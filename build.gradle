@@ -70,7 +70,7 @@ def getVersionName = {
 sourceCompatibility = 1.8
 
 group = 'net.clearcontrol'
-version = getVersionName()
+version = '0.8.1-RH'
 
 
 test 
@@ -97,7 +97,7 @@ dependencies
     compile 'org.apache.commons:commons-lang3:3.4'
 
     // ClearCL:
-    compile ('net.clearvolume:clearcl:0.5.2')      {transitive= true; changing= true}
+    compile ('net.clearvolume:clearcl:0.5.4-RH')      {transitive= true; changing= true}
     
     // Vecmath:
     compile ('javax.vecmath:vecmath:1.5.2')
@@ -117,6 +117,7 @@ dependencies
 repositories 
 {
     // main repos:
+    mavenLocal()
     mavenCentral()
     maven { url "http://oss.sonatype.org/content/groups/public"} 
     maven { url "http://mvnrepository.com/artifact" }
@@ -126,6 +127,7 @@ repositories
 
     // ClearVolume: 
     maven { url  "http://dl.bintray.com/clearvolume/ClearVolume"  }
+    maven { url "http://dl.bintray.com/haesleinhuepf/snapshots" }
     
     //Sqeazy:
     maven {url  "http://dl.bintray.com/psteinb/maven" }

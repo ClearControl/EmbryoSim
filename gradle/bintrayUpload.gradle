@@ -13,8 +13,8 @@ if(hasProperty('bintray_user') && hasProperty('bintray_key') )
 			dryRun = false //Whether to run this as dry-run, without deploying
 			publish = true //If version should be auto published after an upload
 			pkg {
-				repo = 'ClearControl'
-				userOrg = 'clearcontrol' //An optional organization name when the repo belongs to one of the user's orgs
+				repo = 'snapshots'
+				userOrg = 'haesleinhuepf' //An optional organization name when the repo belongs to one of the user's orgs
 				name = project.name
 				desc = project.name
 				websiteUrl = 'https://github.com/ClearControl'
