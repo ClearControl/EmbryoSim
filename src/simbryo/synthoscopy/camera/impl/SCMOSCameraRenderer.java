@@ -6,7 +6,7 @@ import clearcl.ClearCLContext;
 import clearcl.ClearCLImage;
 import clearcl.ClearCLKernel;
 import clearcl.ClearCLProgram;
-import clearcl.enums.ImageChannelDataType;
+import clearcl.enums.*;
 import simbryo.synthoscopy.camera.CameraRendererInterface;
 import simbryo.synthoscopy.camera.ClearCLCameraRendererBase;
 
@@ -499,10 +499,10 @@ public class SCMOSCameraRenderer extends ClearCLCameraRendererBase
     ClearCLImage lImage = mImage;
     ClearCLImage lImageTemp = mImageTemp;
 
-    mImage =
-           mContext.createSingleChannelImage(mImage.getChannelDataType(),
-                                             getWidth(),
-                                             getHeight());
+    mImage = mContext.createImage(MemAllocMode.Best, HostAccessType.ReadWrite, KernelAccessType.ReadWrite, ImageChannelOrder.R, mImage.getChannelDataType(), new long[]{getWidth(), getHeight()});
+           //mContext.createSingleChannelImage(mImage.getChannelDataType(),
+           //                                  getWidth(),
+           //                                  getHeight());
 
     mImageTemp = mContext.createImage(mImage,
                                       ImageChannelDataType.Float);

@@ -2,7 +2,7 @@ package simbryo.synthoscopy;
 
 import clearcl.ClearCLContext;
 import clearcl.ClearCLImage;
-import clearcl.enums.ImageChannelDataType;
+import clearcl.enums.*;
 import clearcl.util.Region3;
 import clearcl.viewer.ClearCLImageViewer;
 import coremem.ContiguousMemoryInterface;
@@ -49,8 +49,9 @@ public abstract class ClearCLSynthoscopyBase extends
 
     mContext = pContext;
 
-    mImage = mContext.createSingleChannelImage(pDataType,
-                                               getImageDimensions());
+    mImage = mContext.createImage(MemAllocMode.Best, HostAccessType.ReadWrite, KernelAccessType.ReadWrite, ImageChannelOrder.R, pDataType, getImageDimensions());
+            //mContext.createSingleChannelImage(pDataType,
+             //                                  getImageDimensions());
 
     mImage.fillZero(true, false);
   }
