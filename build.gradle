@@ -70,7 +70,7 @@ def getVersionName = {
 sourceCompatibility = 1.8
 
 group = 'net.clearcontrol'
-version = '0.8.3'
+version = '0.8.4'
 
 
 test 
@@ -97,7 +97,7 @@ dependencies
     compile 'org.apache.commons:commons-lang3:3.4'
 
     // ClearCL:
-    compile ('net.clearvolume:clearcl:0.5.4-RH')      {transitive= true; changing= true}
+    compile ('net.clearvolume:clearcl:0.5.5-RH')      {transitive= true; changing= true}
     
     // Vecmath:
     compile ('javax.vecmath:vecmath:1.5.2')
