@@ -61,6 +61,7 @@ public class LightSheetMicroscopeSimulatorOrganoid  extends
         try
         {
             mOrganoid = new Organoid(dimensions);
+            mOrganoid.simulationSteps((int)pInitialDivisionTime);
                     //Drosophila.getDeveloppedEmbryo(pInitialDivisionTime);
 
             mDrosophilaFluorescencePhantom =
