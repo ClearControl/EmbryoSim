@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import clearcl.ClearCLContext;
 import clearcl.ClearCLProgram;
+import simbryo.dynamics.tissue.TissueDynamicsInterface;
+import simbryo.dynamics.tissue.embryo.EmbryoDynamics;
 import simbryo.dynamics.tissue.embryo.zoo.Drosophila;
 import simbryo.synthoscopy.phantom.fluo.impl.drosophila.DrosophilaHistoneFluorescence;
 import simbryo.synthoscopy.phantom.scatter.ScatteringPhantom;
@@ -34,7 +36,7 @@ public class DrosophilaScatteringPhantom extends ScatteringPhantom
    *           thrown if OpenCL kernels cannot be read.
    */
   public DrosophilaScatteringPhantom(ClearCLContext pContext,
-                                     Drosophila pDrosophila,
+                                     EmbryoDynamics pDrosophila,
                                      DrosophilaHistoneFluorescence pDrosophilaHistoneFluorescence,
                                      long... pStackDimensions) throws IOException
   {
@@ -61,12 +63,19 @@ public class DrosophilaScatteringPhantom extends ScatteringPhantom
     lProgram.addSource(DrosophilaScatteringPhantom.class,
                        "kernel/Scattering.cl");
 
-    Drosophila lDrosophila = (Drosophila) getTissue();
-    lProgram.addDefine("ELLIPSOIDA", lDrosophila.getEllipsoidA());
-    lProgram.addDefine("ELLIPSOIDB", lDrosophila.getEllipsoidB());
-    lProgram.addDefine("ELLIPSOIDC", lDrosophila.getEllipsoidC());
-    lProgram.addDefine("ELLIPSOIDR", lDrosophila.getEllipsoidR());
-
+    TissueDynamicsInterface lTissue = getTissue();
+    if (lTissue instanceof Drosophila) {
+      Drosophila lDrosophila = (Drosophila) lTissue;
+      lProgram.addDefine("ELLIPSOIDA", lDrosophila.getEllipsoidA());
+      lProgram.addDefine("ELLIPSOIDB", lDrosophila.getEllipsoidB());
+      lProgram.addDefine("ELLIPSOIDC", lDrosophila.getEllipsoidC());
+      lProgram.addDefine("ELLIPSOIDR", lDrosophila.getEllipsoidR());
+    } else {
+      lProgram.addDefine("ELLIPSOIDA", new Float(0.5));
+      lProgram.addDefine("ELLIPSOIDB", new Float(0.5));
+      lProgram.addDefine("ELLIPSOIDC", new Float(0.5));
+      lProgram.addDefine("ELLIPSOIDR", new Float(0.5));
+    }
     lProgram.buildAndLog();
 
     mRenderKernel = lProgram.createKernel("scatterrender");

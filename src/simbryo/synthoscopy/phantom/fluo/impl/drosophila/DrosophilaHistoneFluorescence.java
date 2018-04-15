@@ -4,7 +4,11 @@ import java.io.IOException;
 
 import clearcl.ClearCLContext;
 import clearcl.ClearCLProgram;
+import simbryo.dynamics.tissue.TissueDynamics;
+import simbryo.dynamics.tissue.TissueDynamicsInterface;
+import simbryo.dynamics.tissue.embryo.EmbryoDynamics;
 import simbryo.dynamics.tissue.embryo.zoo.Drosophila;
+import simbryo.dynamics.tissue.embryo.zoo.Organoid;
 import simbryo.synthoscopy.phantom.fluo.HistoneFluorescence;
 
 /**
@@ -28,7 +32,7 @@ public class DrosophilaHistoneFluorescence extends HistoneFluorescence
    *           thrown if OpenCL kernels cannot be read.
    */
   public DrosophilaHistoneFluorescence(ClearCLContext pContext,
-                                       Drosophila pDrosophila,
+                                       EmbryoDynamics pDrosophila,
                                        long... pStackDimensions) throws IOException
   {
     super(pContext, pDrosophila, pStackDimensions);
@@ -40,15 +44,30 @@ public class DrosophilaHistoneFluorescence extends HistoneFluorescence
     pClearCLProgram.addSource(DrosophilaHistoneFluorescence.class,
                               "kernel/AutoFluo.cl");
 
-    Drosophila lDrosophila = (Drosophila) getTissue();
-    pClearCLProgram.addDefine("ELLIPSOIDA",
-                              lDrosophila.getEllipsoidA());
-    pClearCLProgram.addDefine("ELLIPSOIDB",
-                              lDrosophila.getEllipsoidB());
-    pClearCLProgram.addDefine("ELLIPSOIDC",
-                              lDrosophila.getEllipsoidC());
-    pClearCLProgram.addDefine("ELLIPSOIDR",
-                              lDrosophila.getEllipsoidR());
+    TissueDynamicsInterface lDynamics = getTissue();
+
+    if (lDynamics instanceof Drosophila) {
+      Drosophila lDrosophila = (Drosophila) getTissue();
+      pClearCLProgram.addDefine("ELLIPSOIDA",
+              lDrosophila.getEllipsoidA());
+      pClearCLProgram.addDefine("ELLIPSOIDB",
+              lDrosophila.getEllipsoidB());
+      pClearCLProgram.addDefine("ELLIPSOIDC",
+              lDrosophila.getEllipsoidC());
+      pClearCLProgram.addDefine("ELLIPSOIDR",
+              lDrosophila.getEllipsoidR());
+    } else  {
+      pClearCLProgram.addDefine("ELLIPSOIDA",
+              new Float(0.5));
+      pClearCLProgram.addDefine("ELLIPSOIDB",
+              new Float(0.5));
+      pClearCLProgram.addDefine("ELLIPSOIDC",
+              new Float(0.5));
+      pClearCLProgram.addDefine("ELLIPSOIDR",
+              new Float(0.5));
+
+    }
+
   }
 
 }
