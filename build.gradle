@@ -17,9 +17,9 @@ plugins {
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
-apply plugin: 'idea'
 apply plugin: 'javafx-gradle-plugin'
 
 // Master gradle file:
@@ -80,7 +80,7 @@ dependencies
     compile 'org.apache.commons:commons-lang3:3.4'
 
     // ClearCL:
-    compile ('net.clearcontrol:clearcl:'+project.ext.versionsMap["clearcl"]) {transitive= true; changing= true}
+    compile ('net.clearcontrol:clearcl:'+depver("clearcl")) {transitive= true; changing= true}
     
 }
 
@@ -90,6 +90,8 @@ repositories
     // main repos:
     mavenLocal()
     mavenCentral()
+    jcenter()  
+    
     maven { url "http://oss.sonatype.org/content/groups/public"} 
     maven { url "http://mvnrepository.com/artifact" }
 
