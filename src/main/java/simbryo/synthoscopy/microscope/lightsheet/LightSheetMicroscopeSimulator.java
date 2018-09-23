@@ -12,7 +12,6 @@ import javax.vecmath.Vector3f;
 
 import clearcl.ClearCLContext;
 import clearcl.ClearCLImage;
-import clearcl.enums.ImageChannelDataType;
 import clearcl.util.ElapsedTime;
 import clearcl.viewer.ClearCLImageViewer;
 import coremem.ContiguousMemoryInterface;
@@ -123,7 +122,6 @@ public class LightSheetMicroscopeSimulator extends
 
       SCMOSCameraRenderer lSCMOSCameraRenderer =
                                                new SCMOSCameraRenderer(mContext,
-                                                                       ImageChannelDataType.UnsignedInt16,
                                                                        pMaxCameraWidth,
                                                                        pMaxCameraHeight);
       lSCMOSCameraRenderer.setDetectionDownUpVector(pDownUpVector);

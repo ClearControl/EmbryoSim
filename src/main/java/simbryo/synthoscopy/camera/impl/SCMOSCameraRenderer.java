@@ -38,9 +38,7 @@ public class SCMOSCameraRenderer extends ClearCLCameraRendererBase
    * 
    * @param pContext
    *          OpenCL context
-   * 
-   * @param pDataType
-   *          data type for image
+   *
    * @param pMaxCameraImageDimensions
    *          max camera image dimensions in voxels
    * 
@@ -48,10 +46,11 @@ public class SCMOSCameraRenderer extends ClearCLCameraRendererBase
    *           thrown if kernels cannot be read
    */
   public SCMOSCameraRenderer(ClearCLContext pContext,
-                             ImageChannelDataType pDataType,
                              long... pMaxCameraImageDimensions) throws IOException
   {
-    super(pContext, pDataType, pMaxCameraImageDimensions);
+    super(pContext,
+          ImageChannelDataType.UnsignedInt16,
+          pMaxCameraImageDimensions);
 
     setExposure(cNormalExposure);
     setMagnification(1);
